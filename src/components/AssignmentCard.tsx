@@ -12,9 +12,9 @@ export function AssignmentCard({ a, accent, submitted, onSubmittedChange }: {
     <motion.div
       layout
       initial={{ opacity: 0, x: -24 }}
-      animate={{ opacity: submitted ? 0.6 : 1, x: 0 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="relative rounded-md border border-border bg-card p-4"
+      className={`relative rounded-md border border-border bg-card p-4${submitted ? " opacity-60!" : ""}`}
     >
       <Checkbox
         aria-label="Submitted"
