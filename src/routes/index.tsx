@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Loader2, Moon, RefreshCw, Sun } from "lucide-react";
+import { LayoutGrid, List, Loader2, Moon, RefreshCw, Sun } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { KanbanBoard } from "@/components/KanbanBoard";
+import { AssignmentTable } from "@/components/AssignmentTable";
+import { Button } from "@/components/ui/button";
+import { persistBoardView, readBoardView, type BoardView } from "@/lib/board-view";
 import { auditRow, initialAssignments, makeSyncedAssignment } from "@/data/mockData";
 import { persistSubmittedIds, readSubmittedIds, submissionStats, type SubmittedIds } from "@/lib/submissions";
 
@@ -41,6 +44,17 @@ function Index() {
   const [lastSynced, setLastSynced] = useState(auditRow.last_synced);
   const [syncing, setSyncing] = useState(false);
   const [syncCount, setSyncCount] = useState(0);
+  const [view, setView] = useState<BoardView>("kanban");
+  const [viewRestored, setViewRestored] = useState(false);
+
+  useEffect(() => {
+    setView(readBoardView());
+    setViewRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (viewRestored) persistBoardView(view);
+  }, [view, viewRestored]);
 
   useEffect(() => {
     setSubmittedIds(readSubmittedIds());
@@ -80,7 +94,7 @@ function Index() {
   return (
     <div className="flex min-h-screen bg-background text-foreground">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((c) => !c)} active={nav} onNavigate={setNav} />
-      <main className="flex-1 px-8 py-6">
+      <main className="min-w-0 flex-1 px-8 py-6">
         <header className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="font-serif text-3xl">Canvas Deadlines</h1>
@@ -88,7 +102,7 @@ function Index() {
               {auditRow.course_count} course · {items.length} on board
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={sync}
               disabled={syncing}
@@ -97,6 +111,14 @@ function Index() {
               {syncing ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
               {syncing ? "Syncing…" : "Sync Canvas"}
             </button>
+            <div role="group" aria-label="Assignment view" className="inline-flex rounded-md border border-border bg-card p-0.5">
+              <Button variant="ghost" size="icon" aria-label="Kanban" title="Kanban" aria-pressed={view === "kanban"} onClick={() => setView("kanban")} className={`h-8 w-8 focus-visible:ring-checkbox-border${view === "kanban" ? " bg-secondary" : ""}`}>
+                <LayoutGrid />
+              </Button>
+              <Button variant="ghost" size="icon" aria-label="Table" title="Table" aria-pressed={view === "table"} onClick={() => setView("table")} className={`h-8 w-8 focus-visible:ring-checkbox-border${view === "table" ? " bg-secondary" : ""}`}>
+                <List />
+              </Button>
+            </div>
             <button
               onClick={() => setDark((d) => !d)}
               aria-label="Toggle theme"
@@ -120,7 +142,11 @@ function Index() {
               <progress aria-label="Submission progress" className="submission-progress block h-1.5 w-full overflow-hidden rounded" value={submitted} max={boardTotal || 1} />
             </div>
             <div className="mt-6">
-              <KanbanBoard items={items} submittedIds={submittedIds} onSubmittedChange={onSubmittedChange} />
+              {view === "kanban" ? (
+                <KanbanBoard items={items} submittedIds={submittedIds} onSubmittedChange={onSubmittedChange} />
+              ) : (
+                <AssignmentTable items={items} submittedIds={submittedIds} onSubmittedChange={onSubmittedChange} />
+              )}
             </div>
           </>
         ) : (

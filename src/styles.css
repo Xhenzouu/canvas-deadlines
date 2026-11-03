@@ -57,6 +57,9 @@
   --color-col-kc: var(--col-kc);
   --color-kc-tint: var(--kc-tint);
   --color-submitted: var(--submitted);
+  --color-checkbox-border: var(--checkbox-border);
+  --color-checkbox-checked: var(--checkbox-checked);
+  --color-checkbox-checkmark: var(--checkbox-checkmark);
   --font-serif: Georgia, "Tiempos Headline", serif;
   --font-sans: Inter, system-ui, -apple-system, sans-serif;
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -69,6 +72,9 @@
 }
 
 :root {
+  --checkbox-border: oklch(0.551 0.027 264.364);
+  --checkbox-checked: oklch(0.627 0.194 149.214);
+  --checkbox-checkmark: oklch(1 0 0);
   --submitted: oklch(0.52 0.15 150);
   --radius: 0.5rem;
   --background: #F9FAFB; --foreground: #111827;
@@ -88,6 +94,7 @@
   --sidebar-accent-foreground: #111827; --sidebar-border: #E5E7EB; --sidebar-ring: #22D3EE;
 }
 .dark {
+  --checkbox-border: oklch(0.707 0.022 261.325);
   --submitted: oklch(0.77 0.17 150);
   --background: #1A1918; --foreground: #FFFFFF;
   --card: #2A2A2A; --card-foreground: #FFFFFF;

@@ -11,3 +11,5 @@
 
 - Keep submission state in the board page as a single ID map passed through props; derive counts and per-column sorting through shared pure helpers so state never drifts from the cards.
 - Restore browser submission storage in an effect and wait for restoration before persisting, preventing SSR mismatches and overwriting saved progress.
+- Keep both assignment views controlled by the board page's existing items and submitted ID map; reuse the shared sorting helper so switching presentation cannot fork submission state.
+- Restore and persist the presentation-only view preference through guarded effects, keeping browser storage out of SSR rendering.

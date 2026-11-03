@@ -1,0 +1,3 @@
+- [x] Apply neutral/green checkbox styling without changing theme behavior.
+- [x] Add shared-state table view and remembered segmented toggle.
+- [x] Verify view switching, submission counts, persistence, and tests.
