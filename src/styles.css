@@ -56,6 +56,7 @@
   --color-col-lab: var(--col-lab);
   --color-col-kc: var(--col-kc);
   --color-kc-tint: var(--kc-tint);
+  --color-submitted: var(--submitted);
   --font-serif: Georgia, "Tiempos Headline", serif;
   --font-sans: Inter, system-ui, -apple-system, sans-serif;
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -68,6 +69,7 @@
 }
 
 :root {
+  --submitted: oklch(0.52 0.15 150);
   --radius: 0.5rem;
   --background: #F9FAFB; --foreground: #111827;
   --card: #FFFFFF; --card-foreground: #111827;
@@ -86,6 +88,7 @@
   --sidebar-accent-foreground: #111827; --sidebar-border: #E5E7EB; --sidebar-ring: #22D3EE;
 }
 .dark {
+  --submitted: oklch(0.77 0.17 150);
   --background: #1A1918; --foreground: #FFFFFF;
   --card: #2A2A2A; --card-foreground: #FFFFFF;
   --popover: #2A2A2A; --popover-foreground: #FFFFFF;
@@ -109,3 +112,8 @@
     font-family: var(--font-sans);
   }
 }
+
+.submission-progress { appearance: none; background: var(--secondary); }
+.submission-progress::-webkit-progress-bar { background: var(--secondary); }
+.submission-progress::-webkit-progress-value { background: var(--submitted); }
+.submission-progress::-moz-progress-bar { background: var(--submitted); }

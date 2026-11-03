@@ -1,6 +1,7 @@
 import { AnimatePresence } from "framer-motion";
 import type { Assignment, Category } from "@/data/mockData";
 import { AssignmentCard } from "./AssignmentCard";
+import { sortBySubmission, type SubmittedIds } from "@/lib/submissions";
 
 const accents: Record<Category, string> = {
   Assignments: "bg-col-assign",
@@ -8,7 +9,12 @@ const accents: Record<Category, string> = {
   "Knowledge Checks": "bg-col-kc",
 };
 
-export function KanbanColumn({ title, items }: { title: Category; items: Assignment[] }) {
+export function KanbanColumn({ title, items, submittedIds, onSubmittedChange }: {
+  title: Category;
+  items: Assignment[];
+  submittedIds: SubmittedIds;
+  onSubmittedChange: (id: string, submitted: boolean) => void;
+}) {
   const accent = accents[title];
   const headerBg = title === "Knowledge Checks" ? "bg-kc-tint" : "bg-card";
   return (
@@ -24,8 +30,8 @@ export function KanbanColumn({ title, items }: { title: Category; items: Assignm
       </header>
       <div className="flex flex-col gap-3 p-3">
         <AnimatePresence initial={false}>
-          {items.map((a) => (
-            <AssignmentCard key={a.id} a={a} accent={accent} />
+          {sortBySubmission(items, submittedIds).map((a) => (
+            <AssignmentCard key={a.id} a={a} accent={accent} submitted={submittedIds[a.id] === true} onSubmittedChange={onSubmittedChange} />
           ))}
         </AnimatePresence>
       </div>
