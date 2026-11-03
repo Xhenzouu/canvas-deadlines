@@ -38,16 +38,18 @@ describe("Board view", () => {
     }
     const screen = render(<Harness />);
     const table = screen.getByRole("table");
-    fireEvent.click(table.querySelectorAll('[role="checkbox"]')[0]);
-    expect(latest.k1).toBe(true);
+    const firstCheckbox = table.querySelector('[role="checkbox"]');
+    if (!firstCheckbox) throw new Error("Missing table checkbox");
+    fireEvent.click(firstCheckbox);
+    expect(latest["k1"]).toBe(true);
     expect(submissionStats(initialAssignments, latest)).toEqual({ submitted: 1, unsubmitted: 11, total: 12 });
-    const rowTitles = Array.from(table.querySelectorAll("tbody tr"), (row) => row.children[2].textContent);
+    const rowTitles = Array.from(table.querySelectorAll("tbody tr"), (row) => row.children[2]?.textContent);
     expect(rowTitles.at(-1)).toBe("KC - Amazon Virtual Private Cloud [VPC]");
     expect(screen.getAllByRole("checkbox").filter((checkbox) => checkbox.getAttribute("data-state") === "checked")).toHaveLength(2);
     const checkedCard = screen.getAllByRole("checkbox").filter((checkbox) => checkbox.getAttribute("data-state") === "checked").at(-1);
     if (!checkedCard) throw new Error("Missing submitted card");
     fireEvent.click(checkedCard);
     expect(submissionStats(initialAssignments, latest)).toEqual({ submitted: 0, unsubmitted: 12, total: 12 });
-    expect(table.querySelector("tbody tr")?.children[2].textContent).toBe("KC - Amazon Virtual Private Cloud [VPC]");
+    expect(table.querySelector("tbody tr")?.children[2]?.textContent).toBe("KC - Amazon Virtual Private Cloud [VPC]");
   });
 });
