@@ -43,7 +43,7 @@ export function makeSyncedAssignment(n: number): Assignment {
   return {
     id: `s${Date.now()}`,
     course: COURSE,
-    title: syncPool[n % syncPool.length],
+    title: syncPool[n % syncPool.length] ?? "New Assignment",
     category: "Assignments",
     due: "2026-10-30",
   };
