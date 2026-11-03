@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="Canvas Deadlines: unsubmitted work sorted into Assignments, Labs, and Knowledge Checks columns">
+  <rect width="1200" height="320" fill="#1a1918"/>
+  <rect x="0" y="0" width="10" height="320" fill="#f97316"/>
+
+  <!-- Title -->
+  <text x="64" y="138" font-family="Georgia, 'Times New Roman', serif" font-size="60" font-weight="700" fill="#f5f2ec">Canvas Deadlines</text>
+  <text x="64" y="186" font-family="Inter, Arial, sans-serif" font-size="22" fill="#b9b4aa">Regex-sorted Kanban view of unsubmitted</text>
+  <text x="64" y="216" font-family="Inter, Arial, sans-serif" font-size="22" fill="#b9b4aa">Canvas LMS work, from an n8n aggregator</text>
+  <rect x="64" y="244" width="120" height="4" rx="2" fill="#f97316"/>
+
+  <!-- Kanban columns -->
+  <g font-family="Inter, Arial, sans-serif">
+    <!-- Column 1: Assignments -->
+    <rect x="660" y="52" width="150" height="216" rx="10" fill="#242220" stroke="#3a3733"/>
+    <rect x="660" y="52" width="150" height="6" rx="3" fill="#f97316"/>
+    <text x="676" y="86" font-size="14" font-weight="600" fill="#f5f2ec">Assignments</text>
+    <rect x="674" y="102" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="684" y="114" width="70" height="6" rx="3" fill="#8a857b"/>
+    <rect x="684" y="126" width="40" height="5" rx="2.5" fill="#f97316" opacity="0.8"/>
+    <rect x="674" y="150" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="684" y="162" width="80" height="6" rx="3" fill="#8a857b"/>
+    <rect x="684" y="174" width="40" height="5" rx="2.5" fill="#f97316" opacity="0.8"/>
+    <rect x="674" y="198" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="684" y="210" width="60" height="6" rx="3" fill="#8a857b"/>
+    <rect x="684" y="222" width="40" height="5" rx="2.5" fill="#f97316" opacity="0.8"/>
+
+    <!-- Column 2: Labs -->
+    <rect x="828" y="52" width="150" height="216" rx="10" fill="#242220" stroke="#3a3733"/>
+    <rect x="828" y="52" width="150" height="6" rx="3" fill="#38bdf8"/>
+    <text x="844" y="86" font-size="14" font-weight="600" fill="#f5f2ec">Labs</text>
+    <rect x="842" y="102" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="852" y="114" width="76" height="6" rx="3" fill="#8a857b"/>
+    <rect x="852" y="126" width="40" height="5" rx="2.5" fill="#38bdf8" opacity="0.8"/>
+    <rect x="842" y="150" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="852" y="162" width="64" height="6" rx="3" fill="#8a857b"/>
+    <rect x="852" y="174" width="40" height="5" rx="2.5" fill="#38bdf8" opacity="0.8"/>
+
+    <!-- Column 3: Knowledge Checks -->
+    <rect x="996" y="52" width="150" height="216" rx="10" fill="#242220" stroke="#3a3733"/>
+    <rect x="996" y="52" width="150" height="6" rx="3" fill="#facc15"/>
+    <text x="1012" y="86" font-size="14" font-weight="600" fill="#f5f2ec">Knowledge Checks</text>
+    <rect x="1010" y="102" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="1020" y="114" width="72" height="6" rx="3" fill="#8a857b"/>
+    <rect x="1020" y="126" width="40" height="5" rx="2.5" fill="#facc15" opacity="0.8"/>
+    <rect x="1010" y="150" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="1020" y="162" width="84" height="6" rx="3" fill="#8a857b"/>
+    <rect x="1020" y="174" width="40" height="5" rx="2.5" fill="#facc15" opacity="0.8"/>
+    <rect x="1010" y="198" width="122" height="38" rx="6" fill="#2d2a27"/>
+    <rect x="1020" y="210" width="56" height="6" rx="3" fill="#8a857b"/>
+    <rect x="1020" y="222" width="40" height="5" rx="2.5" fill="#facc15" opacity="0.8"/>
+  </g>
+</svg>
