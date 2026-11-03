@@ -4,6 +4,7 @@ import { Loader2, Moon, RefreshCw, Sun } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { KanbanBoard } from "@/components/KanbanBoard";
 import { auditRow, initialAssignments, makeSyncedAssignment } from "@/data/mockData";
+import { persistSubmittedIds, readSubmittedIds, submissionStats, type SubmittedIds } from "@/lib/submissions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,10 +35,30 @@ function Index() {
   const [nav, setNav] = useState("board");
   const [items, setItems] = useState(initialAssignments);
   const [total, setTotal] = useState(auditRow.total_assignments_scanned);
-  const [unsubmitted, setUnsubmitted] = useState(auditRow.unsubmitted_count);
+  const [submittedIds, setSubmittedIds] = useState<SubmittedIds>({});
+  const [submissionsRestored, setSubmissionsRestored] = useState(false);
+  const { unsubmitted, submitted, total: boardTotal } = submissionStats(items, submittedIds);
   const [lastSynced, setLastSynced] = useState(auditRow.last_synced);
   const [syncing, setSyncing] = useState(false);
   const [syncCount, setSyncCount] = useState(0);
+
+  useEffect(() => {
+    setSubmittedIds(readSubmittedIds());
+    setSubmissionsRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (submissionsRestored) persistSubmittedIds(submittedIds);
+  }, [submittedIds, submissionsRestored]);
+
+  const onSubmittedChange = (id: string, checked: boolean) => {
+    setSubmittedIds((previous) => {
+      const next = { ...previous };
+      if (checked) next[id] = true;
+      else delete next[id];
+      return next;
+    });
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -49,7 +70,6 @@ function Index() {
       setItems((prev) => [...prev, makeSyncedAssignment(syncCount)]);
       setSyncCount((n) => n + 1);
       setTotal((t) => t + 1);
-      setUnsubmitted((u) => u + 1);
       const d = new Date();
       const pad = (n: number) => String(n).padStart(2, "0");
       setLastSynced(`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`);
@@ -89,13 +109,18 @@ function Index() {
 
         {nav === "board" ? (
           <>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-4">
               <Kpi label="Total Assignments" value={total} />
               <Kpi label="Unsubmitted" value={unsubmitted} />
+              <Kpi label="Submitted" value={submitted} />
               <Kpi label="Last Synced" value={lastSynced} />
             </div>
+            <div className="mt-3">
+              <p className="mb-1 text-xs text-muted-foreground">{submitted} of {boardTotal} submitted</p>
+              <progress aria-label="Submission progress" className="submission-progress block h-1.5 w-full overflow-hidden rounded" value={submitted} max={boardTotal || 1} />
+            </div>
             <div className="mt-6">
-              <KanbanBoard items={items} />
+              <KanbanBoard items={items} submittedIds={submittedIds} onSubmittedChange={onSubmittedChange} />
             </div>
           </>
         ) : (

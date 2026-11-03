@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep submission state in the board page as a single ID map passed through props; derive counts and per-column sorting through shared pure helpers so state never drifts from the cards.
+- Restore browser submission storage in an effect and wait for restoration before persisting, preventing SSR mismatches and overwriting saved progress.
